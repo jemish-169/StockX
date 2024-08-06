@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.dagger.hilt.android)
 }
 
 android {
@@ -28,15 +30,23 @@ android {
                 "proguard-rules.pro"
             )
         }
+
+        debug {
+            isMinifyEnabled = false
+        }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
+    }
+    kotlin {
+        jvmToolchain(17)
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     composeOptions {
@@ -51,19 +61,64 @@ android {
 
 dependencies {
 
+    // core libs
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
+
+    // compose
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+
+    // tooling and preview
     implementation(libs.androidx.ui.tooling.preview)
+    debugImplementation(libs.androidx.ui.tooling)
+
+    // Compose - Material Design 3
     implementation(libs.androidx.material3)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.material.icons.extended)
+
+    // Compose - Integration with ViewModels
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
+    // Compose - Integration with Activities
+    implementation(libs.androidx.activity.compose)
+
+    // Compose - Testing
+    androidTestImplementation(libs.compose.junit)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
+    androidTestImplementation(libs.androidx.rules)
+    androidTestImplementation(libs.androidx.uiautomator)
+    androidTestImplementation(libs.truth)
     debugImplementation(libs.androidx.ui.test.manifest)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+
+    // Hilt
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.compiler)
+
+    // Accompanist - Permissions
+    implementation(libs.accompanist.permissions)
+
+    // Jetpack Navigation
+    implementation(libs.androidx.navigation.compose)
+
+    // benchmark
+    implementation(libs.androidx.profileinstaller)
+
+    // Ui and graphics
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }
