@@ -3,9 +3,11 @@ package com.example.stock.features.auth.presentation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,14 +24,14 @@ fun MyApp(userViewModel: UserViewModel) {
     var lastName by remember { mutableStateOf(TextFieldValue("")) }
 
     Column(modifier = Modifier.padding(16.dp)) {
-        BasicTextField(
+        TextField(
             value = firstName,
             onValueChange = { firstName = it },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp)
         )
-        BasicTextField(
+        TextField(
             value = lastName,
             onValueChange = { lastName = it },
             modifier = Modifier
@@ -38,7 +40,8 @@ fun MyApp(userViewModel: UserViewModel) {
         )
         Button(
             onClick = {
-                userViewModel.addUser(firstName.text, lastName.text)
+                if (firstName.text.isNotEmpty() && lastName.text.isNotEmpty())
+                    userViewModel.addUser(firstName.text, lastName.text)
                 firstName = TextFieldValue("")
                 lastName = TextFieldValue("")
             },
@@ -54,8 +57,8 @@ fun MyApp(userViewModel: UserViewModel) {
 
 @Composable
 fun UserList(users: List<User>) {
-    Column {
-        for (user in users) {
+    LazyColumn {
+        items(items = users) { user ->
             Text(text = "${user.firstName} ${user.lastName}", modifier = Modifier.padding(8.dp))
         }
     }

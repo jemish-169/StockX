@@ -3,8 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.devtools.ksp)
     id("dagger.hilt.android.plugin")
-    id("kotlin-kapt")
 }
 
 android {
@@ -31,6 +31,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
+    }
+
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
     }
 
     compileOptions {
@@ -67,7 +71,6 @@ dependencies {
     // core libs
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.runtime.compose)
 
 
     // compose
@@ -127,7 +130,7 @@ dependencies {
     // data - store in android
     implementation(libs.androidx.datastore.preferences)
 
-    //Retrofit Dependencies.
+    // Retrofit Dependencies.
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
@@ -137,12 +140,11 @@ dependencies {
     // room database
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
-    kapt(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     // Hilt
     implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.compiler)
+    ksp(libs.dagger.hilt.compiler)
 
     // Kotlin Extensions and Coroutines support for Room
     implementation(libs.androidx.room.ktx)
@@ -150,9 +152,4 @@ dependencies {
     // Hilt extension for Room
     implementation(libs.androidx.hilt.navigation.compose)
 
-}
-
-// Allow references to generated code
-kapt {
-    correctErrorTypes = true
 }

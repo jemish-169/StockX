@@ -25,7 +25,7 @@ class UserViewModel @Inject constructor(private val repository: UserRepository) 
         viewModelScope.launch {
             val user = User(firstName = firstName, lastName = lastName)
             repository.insertUser(user)
-            getUsers() // Refresh the user list
+            getUsers()
         }
     }
 }
