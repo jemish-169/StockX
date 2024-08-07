@@ -1,4 +1,4 @@
-package com.example.stockx
+package com.example.stock
 
 import org.junit.Test
 

@@ -1,16 +1,18 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
-    alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose.compiler)
+    id("dagger.hilt.android.plugin")
+    id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.example.stockx"
+    namespace = "com.example.stock"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.stockx"
+        applicationId = "com.example.stock"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -26,32 +28,33 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
-
-        debug {
-            isMinifyEnabled = false
-        }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
     }
+
     kotlin {
         jvmToolchain(17)
     }
+
     buildFeatures {
         buildConfig = true
         compose = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -100,15 +103,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     androidTestImplementation(libs.androidx.ui.test.junit4)
 
-    // Hilt
-    implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.compiler)
-
     // Accompanist - Permissions
     implementation(libs.accompanist.permissions)
-
-    // Jetpack Navigation
-    implementation(libs.androidx.navigation.compose)
 
     // benchmark
     implementation(libs.androidx.profileinstaller)
@@ -116,6 +112,44 @@ dependencies {
     // Ui and graphics
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
+
+    // Navigation class
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
+
+    // loading images in compose
+    implementation(libs.coil.compose)
+
+    // Pager and Indicators - Accompanist
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
+
+    // data - store in android
+    implementation(libs.androidx.datastore.preferences)
+
+    //Retrofit Dependencies.
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+    // swipe to refresh
+    implementation(libs.accompanist.swiperefresh)
+
+    // room database
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
+    // Hilt
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.compiler)
+
+    // Kotlin Extensions and Coroutines support for Room
+    implementation(libs.androidx.room.ktx)
+
+    // Hilt extension for Room
+    implementation(libs.androidx.hilt.navigation.compose)
+
 }
 
 // Allow references to generated code
