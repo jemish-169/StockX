@@ -72,6 +72,9 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
+    // Kotlin Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
     // compose
     implementation(platform(libs.androidx.compose.bom))
@@ -142,6 +145,10 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
 
+    // OkHttp
+    implementation (libs.okhttp)
+    implementation (libs.logging.interceptor)
+
     // Hilt
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.compiler)
@@ -149,7 +156,7 @@ dependencies {
     // Kotlin Extensions and Coroutines support for Room
     implementation(libs.androidx.room.ktx)
 
-    // Hilt extension for Room
+    // Hilt extension for compose
     implementation(libs.androidx.hilt.navigation.compose)
 
 }

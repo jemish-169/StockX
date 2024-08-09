@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.stock.data.database.AppDatabase
 import com.example.stock.data.database.UserDao
+import com.example.stock.util.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +22,7 @@ object DatabaseModule {
         return Room.databaseBuilder(
             context,
             AppDatabase::class.java,
-            "app_database"
+            Constants.APP_DATABASE
         ).build()
     }
 
