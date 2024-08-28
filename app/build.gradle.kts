@@ -146,8 +146,8 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     // OkHttp
-    implementation (libs.okhttp)
-    implementation (libs.logging.interceptor)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
 
     // Hilt
     implementation(libs.dagger.hilt.android)
@@ -159,4 +159,13 @@ dependencies {
     // Hilt extension for compose
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // Supabase
+    implementation(platform(libs.bom))
+    implementation(libs.postgrest.kt)
+    implementation(libs.gotrue.kt)
+    implementation(libs.ktor.client.cio)
+
+
+    // Ktor client
+    implementation(libs.ktor.client.android)
 }

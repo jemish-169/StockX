@@ -22,9 +22,9 @@ private val DarkColorScheme = darkColorScheme(
     onPrimary = Black,
     primaryContainer = DarkTeal,
     onPrimaryContainer = White,
-    secondary = DarkGrey,
+    secondary = DarkPeach,
     onSecondary = White,
-    secondaryContainer = DarkGrey,
+    secondaryContainer = LightGrey,
     onSecondaryContainer = Black,
     background = Black,
     onBackground = White,
@@ -37,7 +37,7 @@ private val LightColorScheme = lightColorScheme(
     onPrimary = White,
     primaryContainer = LightTeal,
     onPrimaryContainer = Black,
-    secondary = LightGrey,
+    secondary = LightPeach,
     onSecondary = Black,
     secondaryContainer = DarkGrey,
     onSecondaryContainer = White,
@@ -49,7 +49,7 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun AppTheme(
-    themeOption: ThemeOption = ThemeOption.DYNAMIC,
+    themeOption: ThemeOption = ThemeOption.SYSTEM,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
