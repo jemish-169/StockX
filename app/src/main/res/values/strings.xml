@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">StockX</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="are_you_sure">Are you sure,</string>
+    <string name="sign_out_text">You want to sign Out?</string>
+    <string name="warning">warning</string>
+    <string name="cancel">Cancel</string>
+    <string name="sign_out">Sign out</string>
 </resources>

@@ -54,7 +54,7 @@ fun SignUpScreen(
     var password by remember { mutableStateOf(TextFieldValue("")) }
     var isPasswordVisible by remember { mutableStateOf(false) }
     var rememberCheckBox by remember { mutableStateOf(true) }
-    val userState by authViewModel.authState
+    val authState by authViewModel.authState
     var currentUserState by remember { mutableStateOf("") }
 
     Column(
@@ -150,10 +150,11 @@ fun SignUpScreen(
         // Sign Up Button
         Button(
             onClick = {
-                authViewModel.signUpUser(
-                    User(0, firstName.text, password.text),
-                    rememberCheckBox
-                )
+                if (authState is AuthState.Nothing)
+                    authViewModel.signUpUser(
+                        User(0, firstName.text, password.text),
+                        rememberCheckBox
+                    )
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -182,7 +183,7 @@ fun SignUpScreen(
             )
         }
 
-        when (userState) {
+        when (authState) {
 
             AuthState.Nothing -> {}
 
@@ -191,7 +192,7 @@ fun SignUpScreen(
             }
 
             is AuthState.Success -> {
-                val message = (userState as AuthState.Success).message
+                val message = (authState as AuthState.Success).message
                 currentUserState = message
                 LaunchedEffect(true) {
                     authViewModel.clearUserState()
@@ -204,7 +205,7 @@ fun SignUpScreen(
             }
 
             is AuthState.Error -> {
-                val message = (userState as AuthState.Error).message
+                val message = (authState as AuthState.Error).message
                 currentUserState = message
             }
         }

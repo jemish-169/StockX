@@ -18,26 +18,26 @@ class AuthRepository @Inject constructor(
     suspend fun signInUser(user: User): AuthState {
         try {
             supabaseClient.auth.signInWith(Email) {
-                email = user.email
-                password = user.password
+                email = user.email.trim()
+                password = user.password.trim()
             }
             saveToken()
             return AuthState.Success("Login was successful!")
         } catch (e: Exception) {
-            return AuthState.Error(e.localizedMessage ?: "")
+            return AuthState.Error("Something went wrong, Try Again!")
         }
     }
 
     suspend fun signUpUser(user: User): AuthState {
         try {
             supabaseClient.auth.signUpWith(Email) {
-                email = user.email
-                password = user.password
+                email = user.email.trim()
+                password = user.password.trim()
             }
             saveToken()
             return AuthState.Success("Registered successfully!")
         } catch (e: Exception) {
-            return AuthState.Error(e.localizedMessage ?: "")
+            return AuthState.Error("Something went wrong, Try Again!")
         }
     }
 
@@ -56,7 +56,7 @@ class AuthRepository @Inject constructor(
             removeToken()
             return AuthState.Success("Sign Out successfully!")
         } catch (e: Exception) {
-            return AuthState.Error(e.localizedMessage ?: "")
+            return AuthState.Error("Something went wrong, Try Again!")
         }
     }
 }
