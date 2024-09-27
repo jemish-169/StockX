@@ -14,7 +14,7 @@ android {
     defaultConfig {
         applicationId = "com.example.stock"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -165,7 +165,9 @@ dependencies {
     implementation(libs.gotrue.kt)
     implementation(libs.ktor.client.cio)
 
-
     // Ktor client
     implementation(libs.ktor.client.android)
+
+    // Set theme from Color
+    implementation(libs.material.kolor)
 }

@@ -28,3 +28,6 @@ object MoveScreen
 
 @Serializable
 object StockScreen
+
+@Serializable
+object SettingScreen

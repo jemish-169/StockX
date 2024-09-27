@@ -1,7 +1,5 @@
 package com.example.stock.features.auth.domain
 
-import com.example.stock.data.database.UserDao
-import com.example.stock.data.network.ApiService
 import com.example.stock.util.Preferences
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.gotrue.auth
@@ -11,8 +9,6 @@ import javax.inject.Singleton
 
 @Singleton
 class AuthRepository @Inject constructor(
-    private val userDao: UserDao,
-    private val apiService: ApiService,
     private val supabaseClient: SupabaseClient
 ) {
     suspend fun signInUser(user: User): AuthState {

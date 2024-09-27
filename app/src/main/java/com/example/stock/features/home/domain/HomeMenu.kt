@@ -4,7 +4,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 data class HomeMenu(
     val name: String,
-    val imageVector: ImageVector,
-    val imageDescription: String,
+    val icon: ImageVector,
     val onClick: () -> Unit
 )
