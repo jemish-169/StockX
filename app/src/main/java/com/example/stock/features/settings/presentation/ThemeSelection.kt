@@ -1,30 +1,31 @@
 package com.example.stock.features.settings.presentation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.stock.R
-import com.example.stock.features.settings.domain.getIntFromTheme
-import com.example.stock.features.settings.domain.getThemeFromInt
 import com.example.stock.features.settings.presentation.viewmodel.SettingsViewModel
-import com.example.stock.util.ThemeOption
 
 @Composable
-fun ThemeSelection(settingsViewModel: SettingsViewModel) {
+fun ThemeSelection(
+    selectedItem: Int,
+    onItemSelected: (Int) -> Unit
+) {
 
     val items = listOf("Auto", "Light", "Dark")
-
-    var selectedItem by remember { mutableIntStateOf(getIntFromTheme()) }
 
     Text(
         style = MaterialTheme.typography.titleMedium,
@@ -35,16 +36,23 @@ fun ThemeSelection(settingsViewModel: SettingsViewModel) {
     )
 
     SegmentedButton(items, selectedItem) {
-        selectedItem = it
-        settingsViewModel.setTheme(getThemeFromInt(it))
+        onItemSelected(it)
     }
 }
 
 @Composable
-fun DynamicColorTheme(settingsViewModel: SettingsViewModel) {
+fun DynamicColorTheme(
+    settingsViewModel: SettingsViewModel,
+    pastelColors: List<Color>,
+    selectedItem: Int,
+    onItemSelected: (Int) -> Unit,
+    onColorSelected: (Color) -> Unit
+) {
 
-    val items = listOf("Your system", "Pick your own")
-    var selectedItem by remember { mutableIntStateOf(0) }
+    val items = mutableListOf("Pick your own")
+    if (settingsViewModel.isYourSystemEnabled()) {
+        items.add(0, "Your system")
+    }
 
     Text(
         style = MaterialTheme.typography.titleMedium,
@@ -64,12 +72,21 @@ fun DynamicColorTheme(settingsViewModel: SettingsViewModel) {
     )
 
     SegmentedButton(items, selectedItem) {
-        selectedItem = it
-        settingsViewModel.setTheme(if (it == 0) ThemeOption.SYSTEM else ThemeOption.CUSTOM)
+        onItemSelected(it)
     }
 
-    if (selectedItem == 1) {
-        ColorSeekBar(settingsViewModel)
+    AnimatedVisibility(
+        visible = selectedItem == 1,
+        enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
+        exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Top)
+
+    ) {
+        ColorSeekBar(
+            pastelColors = pastelColors,
+            initialColor = settingsViewModel.getThemeColor(),
+            onColorSelected = { color ->
+                onColorSelected(color)
+            })
     }
 }
 

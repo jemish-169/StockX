@@ -161,8 +161,8 @@ fun MainScreen(
                     content = {
                         SettingScreen(
                             authViewModel = authViewModel,
-                            navController = navController,
-                            settingsViewModel = settingsViewModel
+                            settingsViewModel = settingsViewModel,
+                            navController = navController
                         )
                     },
                 )

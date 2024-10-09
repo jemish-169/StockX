@@ -22,9 +22,14 @@ fun CoroutineScope.collectForPress(
 
 fun generatePastelColors(): List<Color> {
     val pastelColors = mutableListOf<Color>()
-    for (hue in 0..360 step 30) {
+    for (hue in 0..300 step 30) {
         val hsvColor = android.graphics.Color.HSVToColor(floatArrayOf(hue.toFloat(), 0.55f, 1.0f))
         pastelColors.add(Color(hsvColor))
     }
     return pastelColors
+}
+
+fun generateFirstPastelColor(): Color {
+    val hsvColor = android.graphics.Color.HSVToColor(floatArrayOf(0f, 0.55f, 1.0f))
+    return Color(hsvColor)
 }

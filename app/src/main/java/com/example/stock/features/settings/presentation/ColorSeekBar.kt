@@ -26,19 +26,18 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.stock.features.settings.presentation.themeUtils.collectForPress
-import com.example.stock.features.settings.presentation.themeUtils.generatePastelColors
-import com.example.stock.features.settings.presentation.viewmodel.SettingsViewModel
-import com.example.stock.util.ThemeOption
 import kotlinx.coroutines.launch
 
-
 @Composable
-fun ColorSeekBar(settingsViewModel: SettingsViewModel) {
-    val pastelColors = generatePastelColors()
+fun ColorSeekBar(pastelColors: List<Color>, initialColor: Color, onColorSelected: (Color) -> Unit) {
+    val hsvArray = FloatArray(3)
+    android.graphics.Color.colorToHSV(initialColor.toArgb(), hsvArray)
+
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -47,7 +46,7 @@ fun ColorSeekBar(settingsViewModel: SettingsViewModel) {
     ) {
         var hsv by remember {
             mutableStateOf(
-                Triple(0f, 0.55f, 1.0f)
+                Triple(hsvArray[0], 0.55f, 1.0f)
             )
         }
 
@@ -60,7 +59,7 @@ fun ColorSeekBar(settingsViewModel: SettingsViewModel) {
             colorList = pastelColors,
             setColor = { hue ->
                 hsv = Triple(hue, hsv.second, hsv.third)
-                settingsViewModel.setCustomThemeColor(Color.hsv(hsv.first, hsv.second, hsv.third), ThemeOption.CUSTOM)
+                onColorSelected(Color.hsv(hsv.first, hsv.second, hsv.third))
             })
     }
 }
@@ -77,9 +76,7 @@ fun HueBar(
     setColor: (Float) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
-    val interactionSource = remember {
-        MutableInteractionSource()
-    }
+    val interactionSource = remember { MutableInteractionSource() }
     val pressOffset = remember { mutableStateOf(Offset.Zero) }
 
 
@@ -89,6 +86,8 @@ fun HueBar(
     ) {
         val canvasWidth = size.width
         val canvasHeight = size.height
+
+        pressOffset.value = Offset(hueToPoint(hsv.first, canvasWidth), 0f)
 
         val barHeight = barHeightDp.toPx()
         val circleRadius = circleRadiusDp.toPx()
@@ -160,5 +159,9 @@ fun Modifier.emitDragGesture(
 }
 
 fun pointToHue(pointX: Float, width: Float): Float {
-    return (pointX.coerceIn(0f, width) / width) * 360f
+    return (pointX.coerceIn(0f, width) / width) * 300f
+}
+
+fun hueToPoint(hue: Float, width: Float): Float {
+    return (hue / 300f) * width
 }

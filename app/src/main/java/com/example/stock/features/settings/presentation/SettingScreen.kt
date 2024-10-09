@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -22,6 +23,9 @@ fun SettingScreen(
     navController: NavHostController
 ) {
     var signOutAlert by remember { mutableStateOf(false) }
+    var selectedThemeMode by remember { mutableIntStateOf(settingsViewModel.getSelectedThemeMode()) }
+    var selectedDynamicTheme by remember { mutableIntStateOf(settingsViewModel.getDynamicThemeMode()) }
+    val pastelColors = settingsViewModel.getPastelColors
 
     if (signOutAlert) {
         SignOutAlertBox(
@@ -29,6 +33,7 @@ fun SettingScreen(
             onSignOut = {
                 signOutAlert = false
                 authViewModel.signOut()
+                settingsViewModel.clearAll()
                 authViewModel.clearUserState()
                 navController.navigate(SignInScreen) {
                     popUpTo(0) {
@@ -38,7 +43,15 @@ fun SettingScreen(
             })
     }
 
-    ThemeSelection(settingsViewModel = settingsViewModel)
+    ThemeSelection(
+        selectedItem = selectedThemeMode,
+        onItemSelected = {
+            selectedThemeMode = it
+            settingsViewModel.setTheme(
+                themeMode = selectedThemeMode,
+                dynamicThemeMode = selectedDynamicTheme
+            )
+        })
 
     Spacer(
         modifier = Modifier
@@ -46,7 +59,24 @@ fun SettingScreen(
             .height(10.dp)
     )
 
-    DynamicColorTheme(settingsViewModel = settingsViewModel)
+    DynamicColorTheme(
+        settingsViewModel = settingsViewModel,
+        selectedItem = selectedDynamicTheme,
+        pastelColors = pastelColors,
+        onItemSelected = {
+            selectedDynamicTheme = it
+            settingsViewModel.setTheme(
+                themeMode = selectedThemeMode,
+                dynamicThemeMode = selectedDynamicTheme
+            )
+        },
+        onColorSelected = { color ->
+            settingsViewModel.setTheme(
+                themeColor = color,
+                themeMode = selectedThemeMode,
+                dynamicThemeMode = selectedDynamicTheme
+            )
+        })
 
     SignOutBoxItem(onClick = { signOutAlert = true })
 }
