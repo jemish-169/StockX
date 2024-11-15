@@ -76,7 +76,7 @@ fun DynamicColorTheme(
     }
 
     AnimatedVisibility(
-        visible = selectedItem == 1,
+        visible = selectedItem == items.size - 1,
         enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
         exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Top)
 

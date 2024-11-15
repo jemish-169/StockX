@@ -29,9 +29,9 @@ class SettingsViewModel @Inject constructor() : ViewModel() {
     init {
         viewModelScope.launch {
             getPastelColors = generatePastelColors()
-            _themeMode.value = Preferences.getSelectedThemeMode()
-            _dynamicThemeMode.value = Preferences.getDynamicThemeMode()
-            _themeColor.value = Preferences.getThemeColor()
+            _themeMode.emit(Preferences.getSelectedThemeMode())
+            _dynamicThemeMode.emit(Preferences.getDynamicThemeMode())
+            _themeColor.emit(Preferences.getThemeColor())
         }
     }
 
@@ -44,9 +44,9 @@ class SettingsViewModel @Inject constructor() : ViewModel() {
             Preferences.setSelectedThemeMode(themeMode)
             Preferences.setDynamicThemeMode(dynamicThemeMode)
             Preferences.setThemeColor(themeColor)
-            _themeMode.value = themeMode
-            _dynamicThemeMode.value = dynamicThemeMode
-            _themeColor.value = themeColor
+            _themeMode.emit(themeMode)
+            _dynamicThemeMode.emit(dynamicThemeMode)
+            _themeColor.emit(themeColor)
         }
     }
 
