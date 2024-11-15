@@ -20,7 +20,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.stock.R
-import com.example.stock.core.routes.HomeScreen
+import com.example.stock.core.routes.Routes
+import com.example.stock.core.routes.Routes.HomeScreen
 import com.example.stock.features.auth.domain.AuthState
 import com.example.stock.features.auth.domain.User
 import com.example.stock.util.Preferences
@@ -96,7 +97,7 @@ fun SignInScreen(
             navText = stringResource(id = R.string.sign_up),
             modifier = Modifier.clickable {
                 authViewModel.clearUserState()
-                navController.navigate(com.example.stock.core.routes.SignUpScreen)
+                navController.navigate(Routes.SignUpScreen)
             }
         )
 

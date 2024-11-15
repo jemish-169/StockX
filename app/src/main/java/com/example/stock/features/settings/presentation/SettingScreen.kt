@@ -12,7 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.stock.core.routes.SignInScreen
+import com.example.stock.core.routes.Routes.SignInScreen
 import com.example.stock.features.auth.presentation.AuthViewModel
 import com.example.stock.features.settings.presentation.viewmodel.SettingsViewModel
 

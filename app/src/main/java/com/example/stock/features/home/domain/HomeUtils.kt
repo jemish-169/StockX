@@ -11,13 +11,13 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.StackedBarChart
 import androidx.navigation.NavHostController
 import com.example.stock.R
-import com.example.stock.core.routes.AddProductScreen
-import com.example.stock.core.routes.CreatePOScreen
-import com.example.stock.core.routes.CreateSOScreen
-import com.example.stock.core.routes.HistoryScreen
-import com.example.stock.core.routes.MoveScreen
-import com.example.stock.core.routes.SettingScreen
-import com.example.stock.core.routes.StockScreen
+import com.example.stock.core.routes.Routes.AddProductScreen
+import com.example.stock.core.routes.Routes.CreatePOScreen
+import com.example.stock.core.routes.Routes.CreateSOScreen
+import com.example.stock.core.routes.Routes.HistoryScreen
+import com.example.stock.core.routes.Routes.MoveScreen
+import com.example.stock.core.routes.Routes.SettingScreen
+import com.example.stock.core.routes.Routes.StockScreen
 
 fun getHomeMenuList(context: Context, navController: NavHostController): List<HomeMenu> {
     return listOf(

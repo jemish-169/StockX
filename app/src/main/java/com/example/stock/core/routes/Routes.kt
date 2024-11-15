@@ -2,32 +2,34 @@ package com.example.stock.core.routes
 
 import kotlinx.serialization.Serializable
 
-@Serializable
-object SignInScreen
+sealed class Routes() {
+    @Serializable
+    data object SignInScreen : Routes()
 
-@Serializable
-object SignUpScreen
+    @Serializable
+    data object SignUpScreen : Routes()
 
-@Serializable
-object HomeScreen
+    @Serializable
+    data object HomeScreen : Routes()
 
-@Serializable
-object AddProductScreen
+    @Serializable
+    data object AddProductScreen : Routes()
 
-@Serializable
-object CreateSOScreen
+    @Serializable
+    data object CreateSOScreen : Routes()
 
-@Serializable
-object CreatePOScreen
+    @Serializable
+    data object CreatePOScreen : Routes()
 
-@Serializable
-object HistoryScreen
+    @Serializable
+    data object HistoryScreen : Routes()
 
-@Serializable
-object MoveScreen
+    @Serializable
+    data object MoveScreen : Routes()
 
-@Serializable
-object StockScreen
+    @Serializable
+    data object StockScreen : Routes()
 
-@Serializable
-object SettingScreen
+    @Serializable
+    data object SettingScreen : Routes()
+}
